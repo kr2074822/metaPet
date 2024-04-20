@@ -20,9 +20,11 @@
 - Router
 - Swipe
 - Styled-component
+- Vercel
 
  # 프로젝트 기능
 
+- Vercel 배포
  - 파이어베이스를 활용한 회원가입/로그인
  - Header, FooterIcon 및 탭 기능 Redux로 상태관리
  - 파이어베이스로 제품, 컬렉션 및 유저 데이터 불러오기
