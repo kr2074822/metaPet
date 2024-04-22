@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import profile from "../../assets/images/myPage/profile.png";
 import arrow from "../../assets/images/myPage/arrow.png";
 import { Link } from "react-router-dom";
 import { InfoBgBox } from "../../components/myPage/InfoBgBox";
@@ -91,7 +90,6 @@ const InfoItem = styled.div`
 
 const MyPage = () => {
   const loginUser = useSelector((state) => state.loginUser.user);
-  console.log(loginUser);
 
   const infoTitleText = [
     {
@@ -118,12 +116,11 @@ const MyPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(headerChange({
-      type: 't1',
-      title: 'home',
+      type: 't2',
+      title: '마이페이지',
     }))
     dispatch(menuChange('user'));
   }, []);
-  
 
   return (
     <Wrap>
@@ -215,4 +212,5 @@ const MyPage = () => {
     </Wrap>
   );
 };
+
 export default MyPage;

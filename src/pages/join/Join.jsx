@@ -7,10 +7,9 @@ import { Link } from "react-router-dom";
 import ScrollToTop from "../../common/utils/scrollToTop";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { uid } from "uid"
-import { db,  } from "../../common/api/firebase";
+import { db, } from "../../common/api/firebase";
 import { ref, set } from "firebase/database";
 import 'firebase/compat/database'; // Realtime Database 모듈 추가
-
 
 const StepOneWrap = styled.div`
   padding: 0 28px;
@@ -54,7 +53,7 @@ const Join = () => {
     email: "",
     password: "",
     phone: "",
-    cash: 0,
+    cash: 1000000,
     follower: {},
     following: {},
     bio: "",
@@ -69,16 +68,11 @@ const Join = () => {
     cart: {}
   });
 
-  console.log(sign);
-
-
   const Signup = () => {
     async function register(email, password) {
       try {
         const auth = getAuth();
-        console.log(auth);
         const user = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(user);
 
         set(ref(db, "user/" + sign.uuid), sign);
       } catch (error) {
@@ -88,36 +82,11 @@ const Join = () => {
     register(sign.email, sign.password);
   }
 
-
-
-  // useEffect(() => {
-  //   async function getProduct() {
-  //     const dbRef = ref(db);
-  //     await get(child(dbRef, "/"))
-  //       .then(snapshot => {
-  //         if (snapshot.exists()) {
-  //           // setProduct(snapshot.val());
-  //           console.log(snapshot.val());
-  //         } else {
-  //           console.log("No data available");
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error(error);
-  //       });
-  //   }
-  //   getProduct();
-  // }, []);
-
-
-
-
   return (
     <>
       {step ? (
         <StepOneWrap>
           <ScrollToTop />
-
           <FormInput title="이메일" placeholder="이메일을 입력해주세요" setSign={setSign} type="email">
             이메일
           </FormInput>
@@ -154,9 +123,7 @@ const Join = () => {
           <FormInput title="전화번호" placeholder="-없이 입력해주세요" setSign={setSign} type="phone">
             전화번호
           </FormInput>
-
           <JoinTerms />
-
           <Link to="/join/joinDoen">
             <LoginBtn onClick={(e) => { Signup() }}>가입하기</LoginBtn>
           </Link>

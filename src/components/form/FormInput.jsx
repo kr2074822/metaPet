@@ -65,7 +65,6 @@ const FormInput = ({ title, type, userInput, placeholder, width, setSign, setUse
     }
   }
 
-  
   function login(e) {
     if (setUser != undefined) {
       if (type == "email") {
@@ -76,7 +75,6 @@ const FormInput = ({ title, type, userInput, placeholder, width, setSign, setUse
       }
     }
   }
-
 
   return (
     <Wrap width={width}>

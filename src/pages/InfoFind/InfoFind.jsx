@@ -18,8 +18,6 @@ const Wrap = styled.div`
   }
 `;
 
-
-
 const InfoFind = () => {
   return (
     <Wrap>

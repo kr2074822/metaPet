@@ -1,10 +1,6 @@
 import styled from "styled-components";
-import likeOn from '../../../assets/images/common/like_on.png';
-import likeOff from '../../../assets/images/common/like_off.png';
-import sampleImg from '../../../assets/images/common/dog_sample2.png';
-import sampleImg2 from '../../../assets/images/common/dog_sample3.png';
-
 import { Link } from "react-router-dom";
+import { objToArr } from "../../../common/utils/objToArr";
 
 
 
@@ -64,29 +60,6 @@ const UserLink = styled(Link)`
     }
 `;
 
-const CollLike = styled.div`
-    width: 42px;
-    height: 42px;
-
-    & > button {
-        width: 42px;
-        height: 42px;
-        padding: 0;
-        margin: 0;
-        background: none;
-        border: 1px solid #0000000F;
-        border-radius: 100%;
-        cursor: pointer;
-
-        & > img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 100%;
-        }
-    }
-`;
-
 const CollImg = styled(Link)`
     width: 100%;
     display: flex;
@@ -119,48 +92,55 @@ const GroupImg = styled.div`
         height: 95px;
         object-fit: cover;
         border-radius: 12px;
-
     }
-
 `;
 
+function CollectionItem({ coll, productAll }) {
+    let product = objToArr(coll.product);
+    let collectionItem;
 
-function CollectionItem() {
+    function filterCollection() {
+        let temp = [];
+
+        productAll?.filter((val, i) => {
+            product?.filter((item, idx) => {
+                if (val.uuid == item) {
+                    temp.push(val);
+                }
+            })
+        });
+        return temp
+    }
+    collectionItem = filterCollection();
 
     return (
         <CollItem>
             <UserInfo>
                 <div>
-                    <ImgLink >
-                        <img src={sampleImg} />
+                    <ImgLink to={"/"}>
+                        <img src={coll.userImage} />
                     </ImgLink>
 
-                    <UserLink>
-                        <span>Metaverse Robot</span>
-                        <span>created by gogogo</span>
+                    <UserLink to={"/"}>
+                        <span>{coll.title}</span>
+                        <span>created by {coll.userNickname}</span>
                     </UserLink>
                 </div>
-
-
-                <CollLike>
-                    <button><img src={likeOff} /></button>
-                </CollLike>
-
             </UserInfo>
-
-
-
-            <CollImg>
+            <CollImg to={"/"}>
                 <SoloImg>
-                    <img src={sampleImg2} />
+                    <img src={coll.image} />
                 </SoloImg>
                 <GroupImg>
-                    <img src={sampleImg2} />
-                    <img src={sampleImg2} />
-                    <img src={sampleImg2} />
-                    <img src={sampleImg2} />
+                    {
+                        collectionItem &&
+                        collectionItem?.slice(0, 4).map((item, i) => {
+                            return (
+                                <img src={item.image} key={i} />
+                            )
+                        })
+                    }
                 </GroupImg>
-
             </CollImg>
         </CollItem>
     )

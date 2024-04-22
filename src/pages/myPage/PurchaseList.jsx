@@ -1,11 +1,4 @@
 import styled from "styled-components";
-import { InfoBgBox } from "../../components/myPage/InfoBgBox";
-import listImg from "../../assets/images/myPage/purchaseList/list__img.png";
-import {
-  CommentBtn,
-  PurchaseBtn,
-  RefundBtn,
-} from "../../components/styled/UI/button/Button";
 import PurchaseItem from "../../components/myPage/purchaseList/PurchaseItme";
 
 const Wrap = styled.div`

@@ -36,10 +36,10 @@ const Wrap = styled.div`
 
 const PwdFind = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const modalToggleClickHandler = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <Wrap>
       <p className="id__find__title">

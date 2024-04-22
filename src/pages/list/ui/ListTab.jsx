@@ -19,7 +19,6 @@ const Wrapper = styled.div`
             width: 25%;
             height: 100%;
         }
-
    }
 `;
 
@@ -55,18 +54,16 @@ const TabLink = styled(Link)`
     }
 `;
 
-
-function ListTab({type, setType}) {
+function ListTab({ type }) {
     const dispatch = useDispatch();
-
     return (
         <Wrapper>
             <ul>
-                <li onClick={()=>{dispatch(listTabChange('follow'))}}><TabLink className={type == 'follow' ? 'active' : ''}><img src={type == 'follow' ? starOn : starOff} /></TabLink></li>
-                <li onClick={()=>{dispatch(listTabChange('hot'))}}><TabLink className={type == 'hot' ? 'active' : ''}>Hot</TabLink></li>
-                <li onClick={()=>{dispatch(listTabChange('new'))}}><TabLink className={type == 'new' ? 'active' : ''}>New</TabLink></li>
-                <li onClick={()=>{dispatch(listTabChange('coll'))}}><TabLink className={type == 'coll' ? 'active' : ''}>Coll</TabLink></li>
-                <li onClick={()=>{dispatch(listTabChange('celeb'))}}><TabLink className={type == 'celeb' ? 'active' : ''}>Celeb</TabLink></li>
+                <li onClick={() => { dispatch(listTabChange('follow')) }}><TabLink className={type == 'follow' ? 'active' : ''}><img src={type == 'follow' ? starOn : starOff} /></TabLink></li>
+                <li onClick={() => { dispatch(listTabChange('hot')) }}><TabLink className={type == 'hot' ? 'active' : ''}>Hot</TabLink></li>
+                <li onClick={() => { dispatch(listTabChange('new')) }}><TabLink className={type == 'new' ? 'active' : ''}>New</TabLink></li>
+                <li onClick={() => { dispatch(listTabChange('coll')) }}><TabLink className={type == 'coll' ? 'active' : ''}>Coll</TabLink></li>
+                <li onClick={() => { dispatch(listTabChange('celeb')) }}><TabLink className={type == 'celeb' ? 'active' : ''}>Celeb</TabLink></li>
             </ul>
         </Wrapper>
     )

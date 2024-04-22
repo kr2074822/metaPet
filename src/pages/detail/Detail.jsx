@@ -61,28 +61,21 @@ const Share = styled.div`
 `;
 
 const ItemDetail = styled.div`
-
 `;
 
 function Detail() {
     const location = useLocation();
-
-    console.log(location);
-
     const loginUser = useSelector((state) => state.loginUser.user);
     const product = location.state.item;
     const productAll = location.state.productAll;
     const randomProduct = location.state.randomProduct;
     const dispatch = useDispatch();
+    const [type, setType] = useState('story');
 
     useEffect(() => {
         dispatch(menuChange('product'));
+        setType('story')
     }, [])
-
-    const [type, setType] = useState('story');
-
-
-    console.log(product);
 
     return (
         <>
@@ -110,10 +103,10 @@ function Detail() {
                             : type === 'info' ?
                                 <DetailInfo product={product} />
                                 : type === 'community' ?
-                                    <DetailCommunity />
-                                    : <DetailFollower />
+                                    <DetailCommunity product={product} />
+                                    : <DetailFollower product={product} />
                     }
-                    <DetailRecommend randomProduct={randomProduct} userLike={objToArr(loginUser?.like)} productAll={productAll} />
+                    <DetailRecommend setType={setType} randomProduct={randomProduct} userLike={objToArr(loginUser?.like)} productAll={productAll} />
                 </Wrapper>
                 : <NotFound />}
         </>

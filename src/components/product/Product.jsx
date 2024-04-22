@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import sampleImg from '../../assets/images/common/dog_sample3.png';
 import likeOn from '../../assets/images/common/like_on.png';
 import likeOff from '../../assets/images/common/like_off.png';
 import Tag from "../../pages/home/ui/Tag";
@@ -81,15 +79,11 @@ const ItemTitle = styled.div`
 `;
 
 
-function Product({ product, userLike, productAll, randomProduct }) {
+function Product({ product, userLike, productAll, randomProduct, setType }) {
     let collectionItem = [];
-    let temp = randomProduct?.slice(0, 4);
-    temp = shuffleArray(temp);
+    let temp = shuffleArray(randomProduct);
+    temp = temp?.slice(0, 4)
     ScrollToTop()
-
-    // 데이터 랜덤셔플
-
-    // Link 이동 방지
     const likeBtn = (e) => {
         e.preventDefault(); // Link 이동 방지
     };
@@ -108,7 +102,6 @@ function Product({ product, userLike, productAll, randomProduct }) {
     }
     collectionItem = filterCollection();
 
-
     return (
         <Wrapper>
             <ul>
@@ -116,7 +109,7 @@ function Product({ product, userLike, productAll, randomProduct }) {
                     collectionItem.length > 1 ?
                         collectionItem.map((item, idx) => {
                             return (
-                                <li key={idx}>
+                                <li key={idx} >
                                     <Item to={"/detail/" + item.uuid} state={{ item: item, productAll: productAll, randomProduct: randomProduct }}>
                                         <ItemImg>
                                             <img src={item.image} />
@@ -127,7 +120,7 @@ function Product({ product, userLike, productAll, randomProduct }) {
 
                                         <ItemInfo>
                                             <ItemTitle>
-                                                <span>{item.productTitle}</span>
+                                                <span>{item.title}</span>
                                                 <Tag tag={item.productTag} />
                                             </ItemTitle>
                                         </ItemInfo>
@@ -139,7 +132,7 @@ function Product({ product, userLike, productAll, randomProduct }) {
                         :
                         temp.map((item, idx) => {
                             return (
-                                <li key={idx}>
+                                <li key={idx} onClick={() => { setType('story') }}>
                                     <Item to={"/detail/" + item.uuid} state={{ item: item, productAll: productAll, randomProduct: randomProduct }}>
                                         <ItemImg>
                                             <img src={item.image} />
@@ -150,7 +143,7 @@ function Product({ product, userLike, productAll, randomProduct }) {
 
                                         <ItemInfo>
                                             <ItemTitle>
-                                                <span>{item.productTitle}</span>
+                                                <span>{item.title}</span>
                                                 <Tag tag={item.productTag} />
                                             </ItemTitle>
                                         </ItemInfo>

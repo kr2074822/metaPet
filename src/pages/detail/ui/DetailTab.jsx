@@ -37,7 +37,7 @@ function DetailTab({setType, type}) {
                 <li onClick={()=>{setType('story')}} className={type === 'story' ? "on" : ''}>스토리</li>
                 <li onClick={()=>{setType('info')}} className={type === 'info' ? "on" : ''}>정보</li>
                 <li onClick={()=>{setType('community')}} className={type === 'community' ? "on" : ''}>커뮤니티</li>
-                <li onClick={()=>{setType('follower')}} className={type === 'follower' ? "on" : ''}>팔로워</li>
+                <li onClick={()=>{setType('follower')}} className={type === 'follower' ? "on" : ''}>구매자</li>
             </ul>
         </Wrapper>
     )

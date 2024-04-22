@@ -23,8 +23,7 @@ const Wrapper = styled.div`
     }
 `;
 
-
-function More({ title, type, product, userLike, randomProduct, user, userFollowing }) {
+function More({ title, type, product, userLike, randomProduct, user, userFollowing, coll, productAll }) {
     const dispatch = useDispatch();
 
     return (
@@ -36,7 +35,9 @@ function More({ title, type, product, userLike, randomProduct, user, userFollowi
                     userLike: userLike,
                     randomProduct: randomProduct,
                     user: user,
-                    userFollowing: userFollowing
+                    userFollowing: userFollowing,
+                    coll: coll,
+                    productAll: productAll
                 }
             } >
                 <img src={moreArrow} />

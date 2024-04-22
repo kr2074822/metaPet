@@ -1,12 +1,9 @@
 import styled from "styled-components";
-import sampleImg from '../../../assets/images/common/dog_sample1.png';
-
 import { Link, useLocation } from "react-router-dom";
 import Product from "../../../components/product/Product";
 import { objToArr } from "../../../common/utils/objToArr";
 
 const Wrapper = styled.div`
-
 `;
 
 const CollInfo = styled.div`
@@ -46,7 +43,6 @@ const CollInfo = styled.div`
         line-height: 18px;
         color: #565656;
     }
-
 `;
 
 const UserLink = styled(Link)`
@@ -63,7 +59,6 @@ const CollList = styled.div`
 
 `;
 
-
 function CollectionDetail() {
     const location = useLocation();
     const product = location.state.product;
@@ -72,26 +67,17 @@ function CollectionDetail() {
     const productList = objToArr(product.product);
     const randomProduct = location.state.randomProduct;
 
-
     return (
         <Wrapper>
             <CollInfo>
                 <img src={product.image} />
                 <span> {product.title}</span>
                 <UserLink>created by {product.userNickname}</UserLink>
-
-                <p>
-                    {product.bio}
-                </p>
+                <p>{product.bio}</p>
             </CollInfo>
-
             <CollList>
-                <Product userLike={userLike} product={productList} productAll={productAll} randomProduct={randomProduct}/> 
+                <Product userLike={userLike} product={productList} productAll={productAll} randomProduct={randomProduct} />
             </CollList>
-
-
-
-
         </Wrapper>
     )
 }

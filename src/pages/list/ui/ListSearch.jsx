@@ -39,13 +39,17 @@ const Wrapper = styled.div`
 
 `;
 
-
-function ListSearch() {
+function ListSearch({ item, setSearchItem }) {
+    function searchFn(value) {
+        let temp = [];
+        temp = item.filter((e) => (e?.title ?? e?.nickName)?.includes(value.target.value));
+        return temp;
+    }
 
     return (
         <Wrapper>
             <button><img src={searchIcon} /></button>
-            <input type="text" placeholder="검색해보세요" />
+            <input type="text" placeholder="검색해보세요" onChange={(e)=> {setSearchItem(searchFn(e))}} />
         </Wrapper>
     )
 }

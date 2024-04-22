@@ -234,7 +234,7 @@ function Footer() {
             </LinkMenu>
           </li>
           <li>
-            <LinkMenu to="/list" state={{ product: product, userLike: userLike, randomProduct: shuffleArray(product)}}>
+            <LinkMenu to="/list" state={{ product: product, userLike: userLike, randomProduct: shuffleArray(product) }}>
               <img src={menu == 'product' ? productOnIcon : productIcon} />
             </LinkMenu>
           </li>

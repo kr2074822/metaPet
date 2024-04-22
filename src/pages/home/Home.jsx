@@ -5,16 +5,13 @@ import Collection from "./ui/Collection";
 import FavSwipe from "./ui/Favswipe";
 import NewSwipe from "./ui/Newswipe";
 import ScrollToTop from "../../common/utils/scrollToTop";
-import { ref, child, get, update } from "firebase/database";
-import { db, firebaseConfig } from "../../common/api/firebase";
+import { ref, child, get } from "firebase/database";
+import { db } from "../../common/api/firebase";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { headerChange, likeToggle, loginStateChange, loginUserSet, menuChange, saveProduct } from "../../store/store";
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import firebase from "firebase/compat/app";
+import { headerChange, likeToggle, loginUserSet, menuChange, saveCollection, saveProduct, saveCeleb, saveFollowing, saveFollower, saveUserPurchase } from "../../store/store";
 import { objToArr } from "../../common/utils/objToArr";
 import Celeb from "./ui/Celeb";
-import { uid } from "uid";
 import { shuffleArray } from "../../common/utils/shuffleArray";
 
 
@@ -40,6 +37,7 @@ function Home() {
   const [randomProduct, setRandomProduct] = useState();
   const [userFollower, setUserFollwer] = useState();
   const [userFollowing, setUserFollwing] = useState();
+  const [userPurchase, setUserPurchase] = useState();
 
   // --------------------------------------------------------------------------------------
 
@@ -51,8 +49,6 @@ function Home() {
     }))
     dispatch(menuChange('home'));
   }, [])
-
-
 
   useEffect(() => {
     // 제품 데이터
@@ -80,11 +76,9 @@ function Home() {
       await get(child(dbRef, "/user"))
         .then(snapshot => {
           if (snapshot.exists()) {
-            // 배열로 반환
             let temp = objToArr(snapshot.val())
-            // let tempFollow =
-            // let tempFollowing =
             setUser(temp);
+            dispatch(saveCeleb(temp));
 
           } else {
             console.log("No data available");
@@ -96,7 +90,6 @@ function Home() {
     }
     getUser();
 
-
     // 컬렉션 데이터
     async function getCollection() {
       const dbRef = ref(db);
@@ -106,6 +99,7 @@ function Home() {
             // 배열로 반환
             let temp = objToArr(snapshot.val())
             setColl(temp);
+            dispatch(saveCollection(temp))
           } else {
             console.log("No data available");
           }
@@ -115,9 +109,27 @@ function Home() {
         });
     }
     getCollection();
+
+    // 구매자 데이터
+    async function getUserPurchase() {
+      const dbRef = ref(db);
+      await get(child(dbRef, "/purchase"))
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            // 배열로 반환
+            let temp = objToArr(snapshot.val())
+            setUserPurchase(temp);
+            dispatch(saveUserPurchase(temp))
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+    getUserPurchase();
   }, []);
-
-
 
   // New 정렬 & hot 정렬
   useEffect(() => {
@@ -129,17 +141,6 @@ function Home() {
       dispatch(saveProduct(product));
     }
   }, [product])
-
-
-
-
-
-
-
-
-
-
-
 
   // 로그인 유저 찾기
   useEffect(() => {
@@ -155,58 +156,10 @@ function Home() {
 
     setUserFollwer(followerTemp);
     setUserFollwing(followingTemp)
-    // objToArr(result[0].like)
 
-    // console.log(likeTemp);
+    dispatch(saveFollower(followerTemp));
+    dispatch(saveFollowing(followingTemp));
   }, [user])
-
-
-
-  // product.sort();
-
-  // let result = product.sort((a, b) => a.startDate.toLowerCase() < b.startDate.toLowerCase() ? -1 : 1);
-  // console.log(result);
-
-
-  // console.log(product);
-
-  // const updateData = () => {
-  //   const temp = {
-  //     amount: 10000
-  //   };
-
-  //   return update(
-  //     ref(db, "/product/0"), temp);
-  // };
-
-  // updateData();
-
-
-  // -**************-
-
-
-  // const Signup = () => {
-  //   async function register(email, password) {
-  //     try {
-  //       const auth = getAuth();
-  //       console.log(auth);
-  //       const user = await createUserWithEmailAndPassword(auth, 'rladudwn0215@naver.com', 'dudwnekt93');
-  //       console.log(user);
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   }
-  //   register();
-  // }
-
-
-  // Signup();
-
-
-
-
-
-
 
 
   return (
@@ -229,7 +182,7 @@ function Home() {
       </Section>
 
       <Section>
-        <More title="Top Collections" type="coll" />
+        <More title="Top Collections" type="coll" productAll={product} coll={coll} />
         <Collection product={coll} userLike={userLike} productAll={product} randomProduct={randomProduct} />
       </Section>
 

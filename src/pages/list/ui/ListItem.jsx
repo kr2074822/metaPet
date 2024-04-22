@@ -1,46 +1,9 @@
 import styled from "styled-components";
-import { LoginLink } from "../../../components/styled/UI/link/Link";
 import likeOn from '../../../assets/images/common/like_on.png';
 import likeOff from '../../../assets/images/common/like_off.png';
 import share from '../../../assets/images/common/item_share_icon.png';
-import sampleImg from '../../../assets/images/common/dog_sample3.png';
 import Tag from "../../home/ui/Tag";
 import { Link } from "react-router-dom";
-
-const Wrapper = styled.div`
-
-`;
-
-const FollowList = styled.div`
-    margin-bottom: 70px;
-`;
-
-const FollowNone = styled.div`
-    width: 100%;
-    height: 75vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: #565656;
-
-    & > h1 {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 13px;
-    }
-
-    & > span {
-        font-size: 14px;
-        font-weight: 600;
-    }
-`;
-
-const LoginAlert = styled(FollowNone)`
-    & > h1 {
-        margin-bottom: 30px;
-   }
-`;
 
 const Item = styled.li`
     position: relative;
@@ -97,7 +60,6 @@ const ItemImg = styled.div`
     }
 `;
 
-
 const ItemInfo = styled.div`
     padding: 17px 22px 22px;
     display: flex;
@@ -113,8 +75,8 @@ const ItemTitle = styled.div`
         line-height: 25px;
         color: #333333;
     }
-
 `;
+
 const ItemLike = styled.button`
     width: 56px;
     height: 56px;
@@ -145,7 +107,6 @@ function ListItem({ item, userLike, randomProduct }) {
         e.preventDefault(); // Link 이동 방지
     };
 
-
     return (
         <Item>
             <Link to={"/detail/" + item?.uuid} state={{ item: item, randomProduct: randomProduct, userLike: userLike }}>
@@ -153,15 +114,13 @@ function ListItem({ item, userLike, randomProduct }) {
                     <img src={item?.image} />
                     <button onClick={shareBtn} className="shareBtn"><img src={share} /></button>
                 </ItemImg>
-
                 <ItemInfo>
                     <ItemTitle>
-                        <span>{item?.productTitle}</span>
+                        <span>{item?.title}</span>
                         <Tag tag={item.productTag} />
                     </ItemTitle>
 
                     <ItemLike onClick={likeBtn} className="likeBtn">
-                        {/* <img src={likeOff} /> */}
                         <img src={(userLike?.filter((e) => e == item?.uuid).length > 0) ? likeOn : likeOff} />
                     </ItemLike>
                 </ItemInfo>

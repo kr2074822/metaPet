@@ -50,10 +50,10 @@ const FormCheckBox = () => {
         htmlFor="loginState"
       >
         <span htmlFor="loginState">
-        로그인 상태 유지
-      </span>
+          로그인 상태 유지
+        </span>
       </label>
-      
+
     </Wrap>
   );
 };

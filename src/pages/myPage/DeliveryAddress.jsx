@@ -59,8 +59,6 @@ const DeliveryAddress = () => {
           </div>
         </div>
       </InfoBgBox>
-      {/* 컴포넌트 분리 필요함. */}
-
       <LoginBtn>+ 배송지 추가</LoginBtn>
     </Wrap>
   );

@@ -34,11 +34,9 @@ const JoinDone = () => {
   return (
     <Wrap>
       <ScrollToTop />
-
       <img src={JoinImg} />
       <p>회원가입을 완료하였습니다.</p>
       <span>로그인 후 원활한 서비스를 이용해주세요.</span>
-
       <BtnLink to="/" className="join__done__loginbtn">
         <LoginBtn>회원가입 완료</LoginBtn>
       </BtnLink>

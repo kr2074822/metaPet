@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 `;
 
 
-function Title({title, sub}) {
+function Title({ title, sub }) {
     return (
         <Wrapper>
             <h1>{title}</h1>

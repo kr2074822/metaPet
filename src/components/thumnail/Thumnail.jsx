@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import sampleImg from '../../assets/images/common/dog_sample3.png';
 import Tag from "../../pages/home/ui/Tag";
 
 const Wrapper = styled.div`
@@ -63,7 +61,7 @@ function ItemThumbnail({ size, product }) {
                     {
                         product !== undefined ?
                             <>
-                                <span>{product.productTitle}</span>
+                                <span>{product.title}</span>
                                 <Tag tag={product.productTag} />
                                 <p>{product.description}</p>
                             </>

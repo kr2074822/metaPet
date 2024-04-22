@@ -7,6 +7,8 @@ import likeOff from '../../../assets/images/common/like_off.png';
 import 'swiper/css';
 import { Link } from "react-router-dom";
 import Tag from "./Tag";
+import { useState } from "react";
+import { getFormatDate } from "../../../common/utils/getFormatDate";
 
 const SwiperWrap = styled(Swiper)`
     height: 450px;
@@ -42,6 +44,14 @@ const ItemImg = styled.div`
         line-height: 20px;
         color: #FFFFFF;
         padding: 5px 10px;
+
+        &.sell {
+            background: #33C2FF;
+        }
+
+        &.end {
+            background: #3F3F3F;
+        }
     }
 
     button {
@@ -104,15 +114,34 @@ const ItemLike = styled.button`
 
 function FavSwipe({ product, userLike, randomProduct }) {
     let temp = product?.slice(0, 5);
+    const today = new Date();
 
     // Link 이동 방지
     const shareBtn = (e) => {
         e.preventDefault(); // Link 이동 방지
     };
-    // // Link 이동 방지
-    // const likeBtn = (e) => {
-    //     e.preventDefault(); // Link 이동 방지
-    // };
+
+    let endDate;
+
+    const isSameDateAndTime = (now, end) => {
+        const nowDate = new Date(now);
+        const endDate = new Date(end);
+        return endDate.getTime() > nowDate.getTime();
+    }
+
+    // function find_day() {
+    //     const targetDay = new Date(endDate);
+    //     const today = new Date();
+
+    //     let day_gap = today - targetDay;
+    //     const day = Math.floor(day_gap / (1000 * 60 * 60 * 24));
+    //     const hour = Math.floor(day_gap / (1000 * 60 * 60) % 24);
+    //     const min = Math.floor(day_gap / (1000 * 60) % 60);
+    //     const sec = Math.floor(day_gap / 1000 % 60);
+
+    //     setDayCnt(`${day}일 ${hour}시간 ${min}분 ${sec}초`);
+    // }
+    // setInterval(find_day, 1000);  //초마다 디데이 기능 실행
 
     return (
         <>
@@ -121,27 +150,34 @@ function FavSwipe({ product, userLike, randomProduct }) {
                 spaceBetween={30}
                 className="mySwiper"
             >
-
                 {
                     temp !== undefined ?
                         temp.map((item, idx) => {
+                            endDate = item.endDate;
                             return (
                                 <SlideItem key={idx}>
                                     <Link to={"/detail/" + item.uuid} state={{ item: item, randomProduct: randomProduct, productAll: product }} >
                                         <ItemImg>
                                             <img src={item.image} />
-                                            <span>3일 11시간 23분</span>
+                                            {
+                                                isSameDateAndTime(today, item.startDate) == true ?
+                                                    <span >판매 전</span>
+                                                    : (isSameDateAndTime(today, item.endDate) == false) ?
+                                                        <span className="end">판매 종료</span>
+                                                        :  isSameDateAndTime(today, item.endDate) == true  ?
+                                                            <span className="sell">판매 중</span>
+                                                            : null
+                                            }
                                             <button onClick={shareBtn}><img src={share} /></button>
                                         </ItemImg>
 
                                         <ItemInfo>
                                             <ItemTitle>
-                                                <span>{item.productTitle}</span>
+                                                <span>{item.title}</span>
                                                 <Tag tag={item.productTag} />
                                             </ItemTitle>
 
                                             <ItemLike>
-                                                {/* <ItemLike onClick={likeBtn}> */}
                                                 <img src={(userLike.filter((e) => e == item?.uuid).length > 0) ? likeOn : likeOff} />
                                             </ItemLike>
                                         </ItemInfo>

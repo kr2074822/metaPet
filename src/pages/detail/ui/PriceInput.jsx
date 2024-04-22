@@ -41,14 +41,14 @@ const Wrapper = styled.div`
 `;
 
 
-function CntInput({ product }) {
+function CntInput({ product, setProductCount, productCount }) {
     const [value, setValue] = useState(1);
 
     return (
         <Wrapper>
-            <button onClick={() => { setValue((prev) => (prev > 1 ? value - 1 : 1)) }}><img src={minus} /></button>
-            <input type="number" max="10" value={value} onChange={() => { }} />
-            <button onClick={() => { setValue((prev) => (prev < product.amount ? value + 1 : product.amount)) }}><img src={plus} /></button>
+            <button onClick={() => { setProductCount((prev) => (prev > 1 ? productCount - 1 : 1)) }}><img src={minus} /></button>
+            <input type="number" max="10" value={productCount} onChange={(e) => { Number(setProductCount(Number(e.target.value)))}} />
+            <button onClick={() => { setProductCount((prev) => (prev < product.amount ? productCount + 1 : product.amount)) }}><img src={plus} /></button>
         </Wrapper>
     )
 }

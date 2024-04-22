@@ -1,6 +1,5 @@
 export function shuffleArray(sourceArr) {
     if (sourceArr) {
-
         const array = sourceArr.concat();
         const arrayLength = array.length;
         for (let i = arrayLength - 1; i >= 0; i--) {

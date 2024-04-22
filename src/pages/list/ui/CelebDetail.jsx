@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import sampleImg from '../../../assets/images/common/dog_sample1.png';
 import instagram from '../../../assets/images/common/instagram_icon.png';
 import youtube from '../../../assets/images/common/youtube_icon.png';
 
@@ -7,7 +6,6 @@ import { Link, useLocation } from "react-router-dom";
 import Product from "../../../components/product/Product";
 import { objToArr } from "../../../common/utils/objToArr";
 import { useSelector } from "react-redux";
-import { shuffleArray } from "../../../common/utils/shuffleArray";
 
 const Wrapper = styled.div`
 
@@ -36,7 +34,6 @@ const CelebInfo = styled.div`
 
 `;
 
-
 const Celeb = styled.div`
     width: 300px;
     display: flex;
@@ -52,7 +49,6 @@ const Celeb = styled.div`
             margin-right: 15px;
     }
 `;
-
 
 const CelebSNS = styled.div`
     display: flex;
@@ -91,21 +87,12 @@ const CelebSNS = styled.div`
     }
 `;
 
-const SNSitem = styled(Link)`
-    & > img {
-        width: 32px;
-        height: 32px;
-    }
-`;
-
-
 const CelebFollow = styled.ul`
     width: 80%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-bottom: 35px;
-
 
     & > li {
         display: flex;
@@ -127,13 +114,9 @@ const CelebFollow = styled.ul`
             }
         }
     }
-
 `;
 
-
-
 const CollList = styled.div`
-
 `;
 
 
@@ -141,15 +124,8 @@ const CollList = styled.div`
 function CelebDetail() {
     const location = useLocation();
     const userInfo = location.state.item;
-
     const product = useSelector((state) => state.product.product);
     const userLike = useSelector((state) => state.userLike.like);
-
-    console.log(userLike);
-    console.log(product);
-    console.log(userInfo.product);
-    console.log(userInfo);
-
 
     function filterProduct() {
         let temp = [];
@@ -163,9 +139,6 @@ function CelebDetail() {
         });
         return temp;
     }
-
-    console.log( filterProduct() );
-
 
     return (
         <Wrapper>
@@ -204,13 +177,8 @@ function CelebDetail() {
             </CelebInfo>
 
             <CollList>
-                {/* <Product /> */}
-                <Product userLike={userLike} productAll={product} randomProduct={filterProduct()}/> 
+                <Product userLike={userLike} productAll={product} randomProduct={filterProduct()} />
             </CollList>
-
-
-
-
         </Wrapper>
     )
 }

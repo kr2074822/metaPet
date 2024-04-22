@@ -83,7 +83,6 @@ const Leave = () => {
                 글로벌 메타버스 기업으로 성장을 목표로 합니다.
               </p>
             </div>
-
             <div className="leave__bottom__wrap">
               <LeaveTitle>정말 탈퇴하시겠습니까?</LeaveTitle>
               <LeaveDesc>
@@ -92,7 +91,6 @@ const Leave = () => {
                 모든 데이터가 삭제되어 복구할 수 없습니다.
               </LeaveDesc>
             </div>
-
             <LeaveBtn className="leave__btn" onClick={stepCheckHandler}>
               탈퇴하기
             </LeaveBtn>

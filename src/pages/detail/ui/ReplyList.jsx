@@ -3,6 +3,8 @@ import sampleImg from "../../../assets/images/common/dog_sample1.png"
 import moreArrow from "../../../assets/images/detail/moreArrow.png"
 import replyArrow from "../../../assets/images/detail/replyArrow.png"
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import CommentInfo from "./Comment";
 
 const Wrapper = styled.div`
     margin-bottom: 24px;
@@ -149,7 +151,7 @@ const ReplyInput = styled.div`
 
 `;
 
-const Replay = styled.ul`
+const Reply = styled.ul`
     margin-top: 10px;
     margin-left: 30px;
 
@@ -170,17 +172,80 @@ const Replay = styled.ul`
         }
     }
 
-    
+
 `;
 
 
 
-function ReplyList() {
+function ReplyList({ allUser, comment, setComment, product }) {
+    const [firstComment, setFirstComment] = useState();
+    const [secondComment, setSecondComment] = useState();
+
+    useEffect(() => {
+        if (comment != null) {
+            let resultNew = comment.sort((a, b) => a.date.toLowerCase() < b.date.toLowerCase() ? -1 : 1);
+            setComment(resultNew);
+
+            let tempFirst = [];
+            let tempSecond = [];
+            for (let i = 0; i < resultNew.length; i++) {
+                if (resultNew[i].parentUuid === "") {
+                    tempFirst.push(resultNew[i]);
+                } else {
+                    tempSecond.push(resultNew[i]);
+                }
+            }
+            setFirstComment(tempFirst)
+            setSecondComment(tempSecond)
+        }
+    }, [comment])
+
     return (
         <Wrapper>
 
             <ul>
+                {
+                    firstComment &&
+                    firstComment.map((comment, idx) => {
+                        return (
+                            <Comment key={idx}>
+                                <CommentInfo comment={comment} allUser={allUser} product={product} setComment={setComment} parentUuid={comment.uuid} />
+                                {
+
+                                }
+                                <Reply>
+                                    {
+                                        secondComment.map((reply, idx) => {
+                                            if (comment.uuid === reply.parentUuid) {
+                                                return (
+                                                    <Comment key={idx}>
+                                                        <CommentInfo comment={reply} allUser={allUser} setComment={setComment} product={product} parentUuid={comment.uuid} />
+                                                    </Comment>
+                                                )
+                                            } 
+                                        })
+                                    }
+                                </Reply>
+                            </Comment>
+                        )
+                    })
+                }
+
+
+                {/* 
                 <Comment>
+                    <CommentInfo />
+                    <Reply>
+                        <Comment>
+                            <CommentInfo />
+                        </Comment>
+                    </Reply>
+                </Comment> */}
+
+
+
+
+                {/* <Comment>
                     <User>
                         <UserLink to="/" >
                             <img src={sampleImg} />
@@ -207,7 +272,7 @@ function ReplyList() {
                         <button>작성하기</button>
                     </ReplyInput>
 
-                    <Replay>
+                    <Reply>
 
                         <Comment>
                             <User>
@@ -236,8 +301,8 @@ function ReplyList() {
                                 <button>작성하기</button>
                             </ReplyInput>
                         </Comment>
-                    </Replay>
-                </Comment>
+                    </Reply>
+                </Comment> */}
             </ul>
         </Wrapper>
     )

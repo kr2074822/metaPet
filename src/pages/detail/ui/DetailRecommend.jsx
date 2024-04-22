@@ -16,11 +16,11 @@ const Wrapper = styled.div`
 
 `;
 
-function DetailRecommend({randomProduct, userLike, productAll}) {
+function DetailRecommend({ randomProduct, userLike, productAll, setType }) {
     return (
         <Wrapper>
             <span>이런 NFT는 어떠신가요?</span>
-            <Product randomProduct={randomProduct} userLike={userLike} productAll={productAll} />
+            <Product setType={setType} randomProduct={randomProduct} userLike={userLike} productAll={productAll} />
         </Wrapper>
     )
 }

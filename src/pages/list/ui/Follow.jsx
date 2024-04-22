@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import ListItem from "./ListItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { headerChange } from "../../../store/store";
 import { useEffect } from "react";
+import { LoginLink } from "../../../components/styled/UI/link/Link";
 
 const Wrapper = styled.div`
-
 `;
 
 const FollowList = styled.div`
@@ -39,36 +39,53 @@ const LoginAlert = styled(FollowNone)`
    }
 `;
 
-
-function ListFollow() {
-    // init('t2', 'product', 'Follow');
+function ListFollow({ product, userLike }) {
     const dispatch = useDispatch();
+    const loginUser = useSelector((state) => state.loginUser.user);
+    let myLikeItem;
+
     useEffect(() => {
         dispatch(headerChange({
             type: 't2',
             title: 'Follow',
         }));
     }, [])
-    
+
+    function filterProduct() {
+        let temp = [];
+
+        product?.filter((val, i) => {
+            userLike?.filter((item, idx) => {
+                if (val.uuid == item) {
+                    temp.push(val);
+                }
+            })
+        });
+        return temp
+    }
+    myLikeItem = filterProduct();
 
     return (
         <Wrapper>
-
-            {/* <FollowNone>
-                <h1>아직 팔로우가 없네요!</h1>
-                <span>관심있는 작가를 팔로우해볼까요?</span>
-            </FollowNone>
-
-            <LoginAlert>
-                <h1>로그인 후 이용이 가능합니다.</h1>
-                <LoginLink>로그인</LoginLink>
-            </LoginAlert> */}
-
             <FollowList>
                 <ul>
-                    <ListItem></ListItem>
-                    <ListItem></ListItem>
-                    <ListItem></ListItem>
+                    {
+                        loginUser === undefined ?
+                            <LoginAlert>
+                                <h1>로그인 후 이용이 가능합니다.</h1>
+                                <LoginLink to="/login">로그인</LoginLink>
+                            </LoginAlert>
+                            : loginUser !== undefined && myLikeItem.length === 0 ?
+                                <FollowNone>
+                                    <h1>아직 팔로우가 없네요!</h1>
+                                    <span>관심있는 작가를 팔로우해볼까요?</span>
+                                </FollowNone>
+                                : myLikeItem.map((item, idx) => {
+                                    return (
+                                        <ListItem item={item} userLike={userLike} randomProduct={product} key={idx} />
+                                    )
+                                })
+                    }
                 </ul>
             </FollowList>
         </Wrapper>

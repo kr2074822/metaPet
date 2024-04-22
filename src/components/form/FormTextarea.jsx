@@ -36,7 +36,6 @@ const FormTextarea = styled.div`
 // FormTextarea를 사용하는 컴포넌트
 const MyFormTextarea = ({ title, userInput, placeholder, width }) => {
   const [isFocused, setIsFocused] = useState(false);
-
   const pHelper = isFocused ? "#33C2FF" : "#333333";
 
   return (
