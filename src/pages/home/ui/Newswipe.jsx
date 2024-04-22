@@ -19,6 +19,7 @@ const SlideItem = styled(SwiperSlide)`
 
 function NewSwipe({ product, randomProduct }) {
     let temp = product?.slice(0, 5);
+    
     return (
         <SwiperWrap
             slidesPerView={'auto'}

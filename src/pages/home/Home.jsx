@@ -39,6 +39,7 @@ function Home() {
   const [userFollowing, setUserFollwing] = useState();
   const [userPurchase, setUserPurchase] = useState();
 
+
   // --------------------------------------------------------------------------------------
 
   // 헤더설정
@@ -59,6 +60,8 @@ function Home() {
           if (snapshot.exists()) {
             let temp = objToArr(snapshot.val())
             setProduct(temp);
+            setNewProduct(objToArr(snapshot.val()));
+            setHotProduct(objToArr(snapshot.val()));
             setRandomProduct(shuffleArray(temp));
           } else {
             console.log("No data available");
@@ -131,16 +134,18 @@ function Home() {
     getUserPurchase();
   }, []);
 
+
+
   // New 정렬 & hot 정렬
   useEffect(() => {
     if (product != null) {
-      let resultNew = product.sort((a, b) => a.startDate.toLowerCase() > b.startDate.toLowerCase() ? -1 : 1);
-      let resultHot = product.sort((a, b) => objToArr(a.like).length > objToArr(b.like).length ? -1 : 1);
+      let resultNew = newProduct?.sort((a, b) => a?.startDate.toLowerCase() < b?.startDate.toLowerCase() ? -1 : 1);
+      let resultHot = hotProduct?.sort((a, b) => objToArr(a.like).length > objToArr(b?.like).length ? -1 : 1);
       setNewProduct(resultNew);
       setHotProduct(resultHot);
       dispatch(saveProduct(product));
     }
-  }, [product])
+  }, [product, newProduct, hotProduct])
 
   // 로그인 유저 찾기
   useEffect(() => {
